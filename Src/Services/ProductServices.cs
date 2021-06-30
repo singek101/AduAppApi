@@ -35,11 +35,7 @@ namespace Aduaba.Services
             var foundProduct = _context.Products.FirstOrDefault(p => p.Id == id);
             return foundProduct;
         }
-        public IEnumerable<Product> GetProductsBySubCategoryId(int id)
-        {
-            var productsFound = _context.Products.Where(product => product.SubCategoryId == id).ToList();
-            return productsFound;
-        }
+        
 
         public void UpdateProduct(Product product)
         {
@@ -58,9 +54,6 @@ namespace Aduaba.Services
             _context.Products.Remove(product);
         }
 
-        public SubCategory GetCategoryId(int id)
-        {
-            return _context.SubCategories.FirstOrDefault(s => s.Id == id);
-        }
+        
     }
 }
