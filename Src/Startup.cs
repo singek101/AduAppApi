@@ -16,6 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,6 +39,11 @@ namespace Aduaba
         {
             services.AddControllers();
             //services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            //add Swagger UI
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Aduaba", Version = "v1" });
+            });
 
             //Configuration from AppSettings
             services.Configure<JWT>(Configuration.GetSection("JWT"));
@@ -46,7 +52,7 @@ namespace Aduaba
             services.AddScoped<IUserServices, UserServices>();
             services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
             services.AddScoped<ICategoryServices, CategoryServices>();
-            services.AddScoped<ISubCategoryServices, SubCategoryServices>();
+            //services.AddScoped<ISubCategoryServices, SubCategoryServices>();
             services.AddScoped<IProductServices, ProductServices>();
             //Adding DB Context with MSSQL
             services.AddDbContext<ApplicationDbContext>(options =>
@@ -85,6 +91,8 @@ namespace Aduaba
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Aduaba v1"));
             }
 
             app.UseHttpsRedirection();

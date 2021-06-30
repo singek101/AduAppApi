@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Aduaba.Migrations
 {
-    public partial class initial : Migration
+    public partial class addedmodels : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -194,6 +194,31 @@ namespace Aduaba.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BillingAddresses",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    ContactPersonsName = table.Column<string>(nullable: false),
+                    Address = table.Column<string>(nullable: false),
+                    City = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: false),
+                    AlternatePhoneNumber = table.Column<string>(nullable: true),
+                    Landmark = table.Column<string>(nullable: true),
+                    ApplicationUserId = table.Column<string>(nullable: true),
+                    AplicationUserId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BillingAddresses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BillingAddresses_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Cards",
                 columns: table => new
                 {
@@ -202,15 +227,15 @@ namespace Aduaba.Migrations
                     CardNumber = table.Column<string>(nullable: false),
                     ExpiryDate = table.Column<DateTime>(nullable: false),
                     CCV = table.Column<string>(maxLength: 3, nullable: false),
-                    ApplicationUserId = table.Column<string>(nullable: true),
-                    CustomerId = table.Column<int>(nullable: false)
+                    ApplicationUserId1 = table.Column<string>(nullable: true),
+                    ApplicationUserId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Cards", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Cards_AspNetUsers_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_Cards_AspNetUsers_ApplicationUserId1",
+                        column: x => x.ApplicationUserId1,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -221,15 +246,15 @@ namespace Aduaba.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
-                    ApplicationUserId = table.Column<string>(nullable: true),
-                    CustomerId = table.Column<int>(nullable: false)
+                    ApplicationUserId1 = table.Column<string>(nullable: true),
+                    ApplicationUserId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Carts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Carts_AspNetUsers_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_Carts_AspNetUsers_ApplicationUserId1",
+                        column: x => x.ApplicationUserId1,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -259,19 +284,24 @@ namespace Aduaba.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "WishLists",
+                name: "ShippingAddresses",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
+                    ContactPersonsName = table.Column<string>(nullable: false),
+                    Address = table.Column<string>(nullable: false),
+                    City = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: false),
+                    AlternatePhoneNumber = table.Column<string>(nullable: true),
+                    Landmark = table.Column<string>(nullable: true),
                     ApplicationUserId = table.Column<string>(nullable: true),
-                    CustomerId = table.Column<int>(nullable: false)
+                    AplicationUserId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_WishLists", x => x.Id);
+                    table.PrimaryKey("PK_ShippingAddresses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_WishLists_AspNetUsers_ApplicationUserId",
+                        name: "FK_ShippingAddresses_AspNetUsers_ApplicationUserId",
                         column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -279,19 +309,43 @@ namespace Aduaba.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SubCategories",
+                name: "WishLists",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    ApplicationUserId1 = table.Column<string>(nullable: true),
+                    ApplicationUserId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WishLists", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_WishLists_AspNetUsers_ApplicationUserId1",
+                        column: x => x.ApplicationUserId1,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Products",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: false),
-                    CategoryId = table.Column<string>(nullable: false)
+                    Description = table.Column<string>(nullable: false),
+                    Price = table.Column<double>(nullable: false),
+                    CategoryId = table.Column<string>(nullable: false),
+                    DateAdded = table.Column<DateTime>(nullable: false),
+                    ImageUrl = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SubCategories", x => x.Id);
+                    table.PrimaryKey("PK_Products", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_SubCategories_Categories_CategoryId",
+                        name: "FK_Products_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
@@ -307,16 +361,24 @@ namespace Aduaba.Migrations
                     OrderStatusId = table.Column<int>(nullable: false),
                     PaymentType = table.Column<string>(nullable: false),
                     OrderDate = table.Column<DateTime>(nullable: false),
-                    ApplicationUserId = table.Column<string>(nullable: true),
-                    CustomerId = table.Column<int>(nullable: false)
+                    ShippingAddressId = table.Column<string>(nullable: true),
+                    BillingAddressId = table.Column<string>(nullable: true),
+                    ApplicationUserId1 = table.Column<string>(nullable: true),
+                    ApplicationUserId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.OrderId);
                     table.ForeignKey(
-                        name: "FK_Orders_AspNetUsers_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_Orders_AspNetUsers_ApplicationUserId1",
+                        column: x => x.ApplicationUserId1,
                         principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Orders_BillingAddresses_BillingAddressId",
+                        column: x => x.BillingAddressId,
+                        principalTable: "BillingAddresses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -325,36 +387,77 @@ namespace Aduaba.Migrations
                         principalTable: "OrderStatuses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Orders_ShippingAddresses_ShippingAddressId",
+                        column: x => x.ShippingAddressId,
+                        principalTable: "ShippingAddresses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Products",
+                name: "WishListItems",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: false),
-                    Description = table.Column<string>(nullable: false),
-                    Price = table.Column<double>(nullable: false),
-                    CategoryId = table.Column<string>(nullable: false),
-                    SubCategory = table.Column<string>(nullable: true),
-                    VendorId = table.Column<int>(nullable: false),
-                    DateAdded = table.Column<DateTime>(nullable: false),
-                    ImageUrl = table.Column<string>(nullable: true),
-                    SubCategoryId = table.Column<int>(nullable: true)
+                    WishListItemId = table.Column<string>(nullable: false),
+                    ProductId1 = table.Column<int>(nullable: true),
+                    ProductId = table.Column<string>(nullable: false),
+                    WishListId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Products", x => x.Id);
+                    table.PrimaryKey("PK_WishListItems", x => x.WishListItemId);
                     table.ForeignKey(
-                        name: "FK_Products_Categories_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "Categories",
+                        name: "FK_WishListItems_Products_ProductId1",
+                        column: x => x.ProductId1,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_WishListItems_WishLists_WishListId",
+                        column: x => x.WishListId,
+                        principalTable: "WishLists",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CartItems",
+                columns: table => new
+                {
+                    CartItemId = table.Column<string>(nullable: false),
+                    ProductId1 = table.Column<int>(nullable: true),
+                    ProductId = table.Column<string>(nullable: false),
+                    Quantity = table.Column<int>(nullable: false),
+                    CartId = table.Column<string>(nullable: false),
+                    OrderId = table.Column<string>(nullable: true),
+                    ApplicationUserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CartItems", x => x.CartItemId);
+                    table.ForeignKey(
+                        name: "FK_CartItems_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_CartItems_Carts_CartId",
+                        column: x => x.CartId,
+                        principalTable: "Carts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Products_SubCategories_SubCategoryId",
-                        column: x => x.SubCategoryId,
-                        principalTable: "SubCategories",
+                        name: "FK_CartItems_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "OrderId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_CartItems_Products_ProductId1",
+                        column: x => x.ProductId1,
+                        principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -389,71 +492,6 @@ namespace Aduaba.Migrations
                         name: "FK_PaymentHistories_PaymentStatuses_PaymentStatusId",
                         column: x => x.PaymentStatusId,
                         principalTable: "PaymentStatuses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CartItems",
-                columns: table => new
-                {
-                    CartItemId = table.Column<string>(nullable: false),
-                    ProductId = table.Column<string>(nullable: false),
-                    Quantity = table.Column<int>(nullable: false),
-                    CartId = table.Column<string>(nullable: false),
-                    OrderId = table.Column<string>(nullable: true),
-                    ApplicationUserId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CartItems", x => x.CartItemId);
-                    table.ForeignKey(
-                        name: "FK_CartItems_AspNetUsers_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_CartItems_Carts_CartId",
-                        column: x => x.CartId,
-                        principalTable: "Carts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CartItems_Orders_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "Orders",
-                        principalColumn: "OrderId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_CartItems_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "WishListItems",
-                columns: table => new
-                {
-                    WishListItemId = table.Column<string>(nullable: false),
-                    ProductId = table.Column<string>(nullable: false),
-                    WishListId = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_WishListItems", x => x.WishListItemId);
-                    table.ForeignKey(
-                        name: "FK_WishListItems_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_WishListItems_WishLists_WishListId",
-                        column: x => x.WishListId,
-                        principalTable: "WishLists",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -498,9 +536,14 @@ namespace Aduaba.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cards_ApplicationUserId",
-                table: "Cards",
+                name: "IX_BillingAddresses_ApplicationUserId",
+                table: "BillingAddresses",
                 column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cards_ApplicationUserId1",
+                table: "Cards",
+                column: "ApplicationUserId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CartItems_ApplicationUserId",
@@ -518,24 +561,34 @@ namespace Aduaba.Migrations
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CartItems_ProductId",
+                name: "IX_CartItems_ProductId1",
                 table: "CartItems",
-                column: "ProductId");
+                column: "ProductId1");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Carts_ApplicationUserId",
+                name: "IX_Carts_ApplicationUserId1",
                 table: "Carts",
-                column: "ApplicationUserId");
+                column: "ApplicationUserId1");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_ApplicationUserId",
+                name: "IX_Orders_ApplicationUserId1",
                 table: "Orders",
-                column: "ApplicationUserId");
+                column: "ApplicationUserId1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_BillingAddressId",
+                table: "Orders",
+                column: "BillingAddressId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_OrderStatusId",
                 table: "Orders",
                 column: "OrderStatusId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_ShippingAddressId",
+                table: "Orders",
+                column: "ShippingAddressId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PaymentHistories_ApplicationUserId",
@@ -558,19 +611,14 @@ namespace Aduaba.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_SubCategoryId",
-                table: "Products",
-                column: "SubCategoryId");
+                name: "IX_ShippingAddresses_ApplicationUserId",
+                table: "ShippingAddresses",
+                column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SubCategories_CategoryId",
-                table: "SubCategories",
-                column: "CategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_WishListItems_ProductId",
+                name: "IX_WishListItems_ProductId1",
                 table: "WishListItems",
-                column: "ProductId");
+                column: "ProductId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_WishListItems_WishListId",
@@ -578,9 +626,9 @@ namespace Aduaba.Migrations
                 column: "WishListId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_WishLists_ApplicationUserId",
+                name: "IX_WishLists_ApplicationUserId1",
                 table: "WishLists",
-                column: "ApplicationUserId");
+                column: "ApplicationUserId1");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -634,16 +682,19 @@ namespace Aduaba.Migrations
                 name: "WishLists");
 
             migrationBuilder.DropTable(
+                name: "BillingAddresses");
+
+            migrationBuilder.DropTable(
                 name: "OrderStatuses");
 
             migrationBuilder.DropTable(
-                name: "SubCategories");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "ShippingAddresses");
 
             migrationBuilder.DropTable(
                 name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
         }
     }
 }

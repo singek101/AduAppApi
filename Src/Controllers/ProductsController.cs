@@ -29,7 +29,7 @@ namespace Aduaba.Controllers
                 Description = requestBody.Description,
                 Price = requestBody.Price,
                 ImageUrl = requestBody.ImageUrl,
-                SubCategoryId = requestBody.SubCategoryId
+                
 
             };
             _services.AddProduct(product);
@@ -61,30 +61,7 @@ namespace Aduaba.Controllers
             }
             return Ok(productsFound);
         }
-        [HttpGet]
-        public IActionResult GetProductsBySubCategoryId(int id)
-        {
-            List<ProductViewDto> productsFoundInSubCategory = new List<ProductViewDto>();
-            List<Product> products = _services.GetProductsBySubCategoryId(id).ToList();
-            if(products.Count == 0)
-            {
-                return NotFound();
-            }
-            else
-            {
-                foreach(var product in products)
-                {
-                    productsFoundInSubCategory.Add(new ProductViewDto()
-                    {
-                        Name = product.Name,
-                        Description = product.Description,
-                        Price = product.Price,
-                        ImageUrl = product.ImageUrl
-                    });
-                }
-            }
-            return Ok(productsFoundInSubCategory);
-        }
+       
         //[HttpPut("{id}")]
         //public IActionResult UpdateProduct(int id, UpdateProductDto updateProductDto)
         //{
