@@ -16,6 +16,6 @@ namespace Aduaba.Models
         public string CategoryName { get; set; }
 
 
-        public virtual IEnumerable<SubCategory> SubCategories { get; set; }
+        
     }
 }

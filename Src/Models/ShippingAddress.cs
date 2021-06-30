@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Aduaba.Models
 {
-    public class BillingAddress
+    public class ShippingAddress
     {
         [Key]
         public string Id { get; set; }

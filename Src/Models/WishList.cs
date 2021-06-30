@@ -13,7 +13,7 @@ namespace Aduaba.Models
         public virtual ApplicationUser ApplicationUser { get; set; }
 
         [Required]
-        public int CustomerId { get; set; }
+        public int ApplicationUserId { get; set; }
 
 
         public virtual IEnumerable<WishListItem> WishListItems { get; set; }
