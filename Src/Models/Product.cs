@@ -21,10 +21,10 @@ namespace Aduaba.Models
 
         [Required]
         public string CategoryId { get; set; }
-        public virtual SubCategory SubCategory { get; set; }
-        public int  SubCategoryId { get; set; }
-        [Required]
-        public int VendorId { get; set; }
+        //public virtual SubCategory SubCategory { get; set; }
+        //public int  SubCategoryId { get; set; }
+        //[Required]
+        //public int VendorId { get; set; }
 
         [Required]
         public DateTime DateAdded { get; set; }

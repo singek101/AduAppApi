@@ -15,8 +15,8 @@ namespace Aduaba.Data
 
         }
 
-        //public DbSet<BillingAddress> BillingAddresses { get; set; }
-        //public DbSet<ShippingAddress> ShippingAddresses { get; set; }
+        public DbSet<BillingAddress> BillingAddresses { get; set; }
+        public DbSet<ShippingAddress> ShippingAddresses { get; set; }
         public DbSet<Card> Cards { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
@@ -27,9 +27,10 @@ namespace Aduaba.Data
         public DbSet<PaymentHistory> PaymentHistories { get; set; }
         public DbSet<PaymentStatus> PaymentStatuses { get; set; }
         public DbSet<Product> Products { get; set; }
+       
         //public DbSet<Promotion> Promotions { get; set; }
-        public DbSet<SubCategory> SubCategories { get; set; }
-       // public DbSet<Vendor> Vendors { get; set; }
+        // public DbSet<SubCategory> SubCategories { get; set; }
+        // public DbSet<Vendor> Vendors { get; set; }
         public DbSet<WishList> WishLists { get; set; }
         public DbSet<WishListItem> WishListItems { get; set; }
     }

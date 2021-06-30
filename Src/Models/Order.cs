@@ -23,20 +23,20 @@ namespace Aduaba.Models
         [Required]
         public DateTime OrderDate { get; set; }
 
-        //public virtual ShippingAddress ShippingAddress { get; set; }
+        public virtual ShippingAddress ShippingAddress { get; set; }
 
 
-        //public string ShippingAddressId { get; set; }
+        public string ShippingAddressId { get; set; }
 
-       // public virtual BillingAddress BillingAddress { get; set; }
+        public virtual BillingAddress BillingAddress { get; set; }
 
 
-        //public string BillingAddressId { get; set; }
+        public string BillingAddressId { get; set; }
 
         public virtual ApplicationUser ApplicationUser { get; set; }
 
         [Required]
-        public int CustomerId { get; set; }
+        public int ApplicationUserId { get; set; }
 
 
         public virtual IEnumerable<CartItem> CartItems { get; set; }
