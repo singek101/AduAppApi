@@ -275,7 +275,6 @@ C:\Users\whizz\Source\Repos\AduAppApi\Src\bin\Debug\netcoreapp3.1\runtimes\win-x
 C:\Users\whizz\Source\Repos\AduAppApi\Src\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\Users\whizz\Source\Repos\AduAppApi\Src\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\Users\whizz\Source\Repos\AduAppApi\Src\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-C:\Users\whizz\Source\Repos\AduAppApi\Src\obj\Debug\netcoreapp3.1\Aduaba.csproj.AssemblyReference.cache
 C:\Users\whizz\Source\Repos\AduAppApi\Src\obj\Debug\netcoreapp3.1\Aduaba.AssemblyInfoInputs.cache
 C:\Users\whizz\Source\Repos\AduAppApi\Src\obj\Debug\netcoreapp3.1\Aduaba.AssemblyInfo.cs
 C:\Users\whizz\Source\Repos\AduAppApi\Src\obj\Debug\netcoreapp3.1\Aduaba.csproj.CoreCompileInputs.cache

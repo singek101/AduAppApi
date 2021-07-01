@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Aduaba.Controllers
+namespace Aduaba.DTO.Product
 {
-    public class AdminController
+    public class AddCategoryRequest
     {
-
+        public string CategoryName { get; set; }
     }
 }
