@@ -152,7 +152,8 @@ namespace Aduaba.Services
                 Email = model.Email,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
-                PhoneNumber=model.PhoneNumber
+                PhoneNumber = model.PhoneNumber,
+                AvatarUrl = "tet"
             };
             var userWithSameEmail = await _userManager.FindByEmailAsync(model.Email);
             if (userWithSameEmail == null)
@@ -161,12 +162,16 @@ namespace Aduaba.Services
                 if (result.Succeeded)
                 {
                     await _userManager.AddToRoleAsync(user, Authorization.Roles.User.ToString());
+                    return $"User Registered with username {user.UserName}";
                 }
-                return $"User Registered with username {user.UserName}";
+
+                return "Error has occured";
+
+
             }
             else
             {
-                return $"Email {user.Email } is already registered.";
+                return $"User Registered with username {user.UserName}";
             }
         }
 

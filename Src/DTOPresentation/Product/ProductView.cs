@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Aduaba.DTOPresentation
 {
-    public class ProductViewDto
+    public class ProductView
     {
         public string Name { get; set; }
 
@@ -13,5 +13,7 @@ namespace Aduaba.DTOPresentation
 
         public double Price { get; set; }
         public string ImageUrl { get; set; }
+        public string Id { get; set; }
+        public string CategoryId { get; set; }
     }
 }
