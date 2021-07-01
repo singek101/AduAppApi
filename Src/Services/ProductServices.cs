@@ -1,4 +1,6 @@
 ﻿using Aduaba.Data;
+using Aduaba.DTO.Product;
+using Aduaba.DTOPresentation;
 using Aduaba.Models;
 using Aduaba.Services.Interfaces;
 using System;
@@ -16,44 +18,104 @@ namespace Aduaba.Services
         {
             _context = context;
         }
-        public void AddProduct(Product product)
+        public string AddProduct(AddProductRequest model)
         {
-            if(product == null)
+            var productExist = _context.Products.FirstOrDefault(c => c.Name == model.Name);
+            if (productExist != null)
             {
-                throw new ArgumentNullException(nameof(product));
+                return "Product already exist, Please check the name of the Product";
             }
-            _context.Add(product);
+            _context.Products.Add(new Product()
+            {
+                Id = Guid.NewGuid().ToString(),
+                Name = model.Name,
+                Description = model.Description,
+                Price = model.Price,
+                ImageUrl = model.ImageUrl,
+                Quantity = model.Quantity,
+                DateAdded = model.DateAdded = DateTime.UtcNow,
+                CategoryId=model.CategoryId
+
+
+            }); ;
+            _context.SaveChanges();
+            return "Product Added";
         }
 
-        public IEnumerable<Product> GetAllProducts()
+        public List<ProductView> GetAllProducts()
         {
-            var productsFound = _context.Products.ToList();
-            return productsFound;
+            List<ProductView> listOfProducts = new List<ProductView>();
+            List<Product> availableProducts = _context.Products.ToList();
+           
+            foreach (var product in availableProducts)
+            {
+                listOfProducts.Add(new ProductView()
+                {
+                    Id=product.Id,
+                    Name=product.Name,
+                    Description=product.Description,
+                    Price=product.Price,
+                    ImageUrl=product.ImageUrl                   
+                });
+
+            }
+            return listOfProducts;
+
+
         }
-        public Product GetProductById(int id)
+        public ProductView GetProductById(string id)
         {
-            var foundProduct = _context.Products.FirstOrDefault(p => p.Id == id);
-            return foundProduct;
+            var foundProduct = _context.Products.FirstOrDefault(p =>p.Id==id);
+            ProductView product = (new ProductView()
+            {
+                Id=foundProduct.Id,
+                Name = foundProduct.Name,
+                Description=foundProduct.Description,
+                ImageUrl=foundProduct.ImageUrl,
+                CategoryId=foundProduct.CategoryId
+                
+            });
+            return product;
         }
         
 
-        public void UpdateProduct(Product product)
+        public string UpdateProduct(EditProductRequest model)
         {
-            
-        }
-        public bool SaveChanges()
-        {
-            return (_context.SaveChanges() >= 0);
-        }
-        public void DeleteProduct(Product product)
-        {
-            if(product == null)
+            var oldProduct = _context.Products.FirstOrDefault(c => c.Id == model.Id);
+
+            if (oldProduct == null)
             {
-                throw new ArgumentNullException(nameof(product));
+                return "Product not found";
+            } //Category not found
+
+
+            
+
+            return "Category name updated";
+
+        }
+       //// public bool SaveChanges()
+       // {
+       //     return (_context.SaveChanges() >= 0);
+       // }
+            public string DeleteProduct(List<string> productIds)
+            {
+                List<Product> productsToDelete = new List<Product>();
+
+                productsToDelete = _context.Products.Where(c => productIds.Contains(c.Id)).ToList();
+
+                if (productsToDelete.Count != 0)
+                {
+                    _context.Products.RemoveRange(productsToDelete);
+                    _context.SaveChanges();
+
+                    return "Product Deleted Succesfully";
+                }
+
+                return "Product doesn't exist";
             }
-            _context.Products.Remove(product);
         }
 
         
     }
-}
+

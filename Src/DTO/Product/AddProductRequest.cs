@@ -1,32 +1,27 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace Aduaba.Models
+namespace Aduaba.DTO.Product
 {
-    public class Product
+    public class AddProductRequest
     {
-        [Key]
-        public string Id { get; set; }
-
         [Required]
         public string Name { get; set; }
-
         [Required]
         public string Description { get; set; }
-
         [Required]
         public double Price { get; set; }
 
-        public virtual Category Category { get; set; }
+        [Required]
         public string CategoryId { get; set; }
         [Required]
+        public string ImageUrl { get; set; }
         public int Quantity { get; set; }
-
         [Required]
         public DateTime DateAdded { get; set; }
-
-        public DateTime DateModified { get; set; }
-
-        public string ImageUrl { get; set; }
+       
     }
 }
