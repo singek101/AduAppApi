@@ -213,10 +213,11 @@ namespace Aduaba.Services
         public async Task<string> UpdateAsync(UpdateRequest model)
         {
             var currentUser = await _userManager.FindByIdAsync(_authenticatedUser.UserId);
-            currentUser.UserName = model.Username;
+            
             currentUser.FirstName = model.FirstName;
             currentUser.LastName = model.LastName;
             currentUser.PhoneNumber = model.PhoneNumber;
+            currentUser.AvatarUrl = model.AvatarUrl;
 
 
             await _userManager.UpdateAsync(currentUser);

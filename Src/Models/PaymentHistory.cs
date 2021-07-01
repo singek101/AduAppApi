@@ -10,12 +10,12 @@ namespace Aduaba.Models
 
         public virtual Order Order { get; set; }
 
-        [Required]
+        
         public string OrderNumber { get; set; }
 
         public virtual PaymentStatus PaymentStatus { get; set; }
 
-        [Required]
+        
         public int PaymentStatusId { get; set; }
 
         [Required]

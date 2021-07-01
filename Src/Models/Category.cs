@@ -9,7 +9,7 @@ namespace Aduaba.Models
     public class Category
     {
         [Key]
-        [Required]
+       
         public string Id { get; set; }
 
         [Required]

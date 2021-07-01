@@ -8,93 +8,35 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Aduaba.Controllers
 {
-    [Route("api/product")]
+    [Authorize]
+    [Route("api/[controller]")]
+    [ApiController]
     public class ProductsController : ControllerBase
     {
-        private readonly IProductServices _services;
+        private readonly IProductServices _productServices;
 
-        public ProductsController(IProductServices services)
+        public ProductsController(IProductServices productServices)
         {
-            _services = services;
+            _productServices = productServices;
         }
-        //    [HttpPost]
-        //    public IActionResult AddProduct(AddProductDto requestBody)
-        //    {
-        //        Product product = new Product()
-        //        {
-        //            Name = requestBody.Name,
-        //            Description = requestBody.Description,
-        //            Price = requestBody.Price,
-        //            ImageUrl = requestBody.ImageUrl,
 
+        [HttpGet]
+        public IActionResult GetAllProducts()
+        {
+            var result = _productServices.GetAllProducts();
+            if(result==null)
+            {
+                return NoContent();
 
-        //        };
-        //        _services.AddProduct(product);
-        //        _services.SaveChanges();
-        //        return Ok();
+            }
+            return Ok(result);
+        }
 
-        //    }
-        //    [HttpGet]
-        //    public IActionResult GetAllProducts()
-        //    {
-        //        List<ProductView> productsFound = new List<ProductView>();
-        //        List<Product> products = _services.GetAllProducts().ToList();
-        //        if(products.Count == 0)
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            foreach(var product in products)
-        //            {
-        //                productsFound.Add(new ProductView()
-        //                {
-        //                    Name = product.Name,
-        //                    Description = product.Description,
-        //                    Price = product.Price,
-        //                    ImageUrl = product.ImageUrl
-        //                });
-        //            }
-        //        }
-        //        return Ok(productsFound);
-        //    }
-
-        //    //[HttpPut("{id}")]
-        //    //public IActionResult UpdateProduct(int id, UpdateProductDto updateProductDto)
-        //    //{
-        //    //    SubCategory subCategory = _services.GetCategoryId(id);
-        //    //    List<Product> OldProducts = _services.GetAllProducts().ToList();
-        //    //    if (subCategory == null && OldProducts == null)
-        //    //    {
-        //    //        return NotFound();
-        //    //    }
-
-        //    //    //var productsFound = _services.GetProductById(id);
-        //    //    //if(productsFound == null)
-        //    //    //{
-        //    //    //    return NotFound();
-        //    //    //}
-        //    //    //Product product = new Product()
-        //    //    //{
-        //    //    //    Name = 
-        //    //    //};
-
-        //    //}
-        //    [HttpDelete("{id}")]
-        //    public IActionResult DeleteProduct(int id)
-        //    {
-        //        var productToDelete = _services.GetProductById(id);
-        //        if(productToDelete == null)
-        //        {
-        //            return NotFound();
-        //        }
-        //        _services.DeleteProduct(productToDelete);
-        //        _services.SaveChanges();
-        //        return NoContent();
-        //    }
-        //}
+        
+        
     }
 }

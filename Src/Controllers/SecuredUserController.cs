@@ -1,5 +1,7 @@
 ﻿using Aduaba.DTO;
+using Aduaba.Models;
 using Aduaba.Services;
+using Aduaba.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,9 +18,11 @@ namespace Aduaba.Controllers
     public class SecuredUserController : ControllerBase
     {
         private readonly IUserServices _userServices;
-        public SecuredUserController(IUserServices userServices)
+        private readonly ISearchServices _search;
+        public SecuredUserController(IUserServices userServices, ISearchServices search)
         {
             _userServices = userServices;
+            _search = search;
         }
         [HttpGet]
         public IActionResult GetSecuredData()
@@ -61,6 +65,28 @@ namespace Aduaba.Controllers
         {
             var result = await _userServices.DeleteAsync();
             return Ok(result);
+        }
+
+        //try if it works
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<Product>>>Search(string name)
+        {
+            try
+            {
+                var result = await _search.Search(name);
+
+                if (result.Any())
+                {
+                    return Ok(result);
+                }
+
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error retrieving data from the database");
+            }
         }
     }
 }

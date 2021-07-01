@@ -2,8 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\Src",
+    "\\Src\\Controllers",
     "\\Src\\Services"
   ],
-  "SelectedNode": "\\Aduaba.sln",
+  "SelectedNode": "\\Src\\Controllers\\UserController.cs",
   "PreviewInSolutionExplorer": false
 }

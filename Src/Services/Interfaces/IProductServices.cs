@@ -14,6 +14,8 @@ namespace Aduaba.Services.Interfaces
         public ProductView GetProductById(string id);
         public string UpdateProduct(EditProductRequest model);
         public string DeleteProduct(List<string> productIds);
+        public ProductView GetProductByName(string name);
+        public List<ProductView> GetAllProducts();
 
 
 
