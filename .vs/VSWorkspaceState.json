@@ -2,6 +2,7 @@
   "ExpandedNodes": [
     "",
     "\\Src",
+    "\\Src\\Controllers",
     "\\Src\\Services"
   ],
   "SelectedNode": "\\Src\\Services\\ProductServices.cs",

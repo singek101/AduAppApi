@@ -16,11 +16,30 @@ namespace Aduaba.Services
         {
             _context = context;
         }
+
+        public Category AddCategory()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteCategory()
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Category> GetAllCategories()
         {
-            var allCategories = _context.Categories.ToList();
-            return allCategories;
+            throw new NotImplementedException();
         }
-            
+
+        public Category GetCategoryById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Category UpdateCategories()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

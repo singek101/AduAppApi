@@ -14,25 +14,10 @@ namespace Aduaba.Controllers
     public class CategoriesController : ControllerBase
     {
         private readonly ICategoryServices _service;
-        private readonly IMapper _mapper;
 
-        public CategoriesController(ICategoryServices service, IMapper mapper)
+        public CategoriesController(ICategoryServices service)
         {
             _service = service;
-            _mapper = mapper;
-        }
-   [HttpGet]
-   public ActionResult <IEnumerable<CategoryViewDto>> GetAllCategories()
-        {
-            var categoryNames = _service.GetAllCategories();
-            if(categoryNames !=null)
-            {
-                return Ok(_mapper.Map<CategoryViewDto>(categoryNames));
-            }
-            else
-            {
-                return NotFound();
-            }
         }
     }
 }

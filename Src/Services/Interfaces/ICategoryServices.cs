@@ -8,6 +8,10 @@ namespace Aduaba.Services.Interfaces
 {
    public  interface ICategoryServices
     {
+        Category AddCategory();
         IEnumerable<Category> GetAllCategories();
+        Category GetCategoryById(int id);
+        Category UpdateCategories();
+        void DeleteCategory();
     }
 }

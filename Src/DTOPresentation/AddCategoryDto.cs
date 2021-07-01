@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Aduaba.Models
+namespace Aduaba.DTOPresentation
 {
-    public class Category
+    public class AddCategoryDto
     {
         [Key]
         [Required]
@@ -14,8 +14,5 @@ namespace Aduaba.Models
 
         [Required]
         public string CategoryName { get; set; }
-
-
-        public virtual IEnumerable<Product> Products { get; set; }
     }
 }
