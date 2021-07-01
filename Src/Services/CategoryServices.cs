@@ -51,12 +51,31 @@ namespace Aduaba.Services
 
 
         }
+        public CategoryView GetCategoryByName(string name)
+        {
+            if (!string.IsNullOrEmpty(name))
+            {
+                var foundCategory = _context.Categories.FirstOrDefault(c => c.CategoryName == name);
+                if (foundCategory == null)
+                {
+                    return null;
+                }
+                CategoryView category = (new CategoryView()
+                {
+                    CategoryId = foundCategory.Id,
+                    CategoryName=foundCategory.CategoryName
 
-        public string DeleteCategory(List<string> categoryIds)
+                });
+                return category;
+            }
+            return null;
+        }
+
+        public string DeleteCategory(List<string> names)
         {
             List<Category> categoriesToDelete = new List<Category>();
 
-            categoriesToDelete = _context.Categories.Where(c => categoryIds.Contains(c.Id)).ToList();
+            categoriesToDelete = _context.Categories.Where(c => names.Contains(c.CategoryName)).ToList();
 
             if (categoriesToDelete.Count != 0)
             {

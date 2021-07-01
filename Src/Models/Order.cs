@@ -14,7 +14,7 @@ namespace Aduaba.Models
 
         public virtual OrderStatus OrderStatus { get; set; }
 
-        [Required]
+        
         public int OrderStatusId { get; set; }
 
         [Required]
@@ -35,7 +35,7 @@ namespace Aduaba.Models
 
         public virtual ApplicationUser ApplicationUser { get; set; }
 
-        [Required]
+        
         public int ApplicationUserId { get; set; }
 
 

@@ -65,17 +65,49 @@ namespace Aduaba.Services
         }
         public ProductView GetProductById(string id)
         {
-            var foundProduct = _context.Products.FirstOrDefault(p =>p.Id==id);
-            ProductView product = (new ProductView()
+            if(!string.IsNullOrEmpty(id))
             {
-                Id=foundProduct.Id,
-                Name = foundProduct.Name,
-                Description=foundProduct.Description,
-                ImageUrl=foundProduct.ImageUrl,
-                CategoryId=foundProduct.CategoryId
-                
-            });
-            return product;
+                var foundProduct = _context.Products.FirstOrDefault(p => p.Id == id);
+                if (foundProduct == null)
+                {
+                    return null;
+                }
+                ProductView product = (new ProductView()
+                {
+                    Id = foundProduct.Id,
+                    Name = foundProduct.Name,
+                    Description = foundProduct.Description,
+                    ImageUrl = foundProduct.ImageUrl,
+                    CategoryId = foundProduct.CategoryId
+
+                });
+                return product;
+            }
+            return null;
+            
+        }
+
+        public ProductView GetProductByName(string name)
+        {
+            if(!string.IsNullOrEmpty(name))
+            {
+                var foundProduct = _context.Products.FirstOrDefault(c => c.Name == name);
+                if (foundProduct == null)
+                {
+                    return null;
+                }
+                ProductView product = (new ProductView()
+                {
+                    Id = foundProduct.Id,
+                    Name = foundProduct.Name,
+                    Description = foundProduct.Description,
+                    ImageUrl = foundProduct.ImageUrl,
+                    CategoryId = foundProduct.CategoryId
+
+                });
+                return product;
+            }
+            return null;
         }
         
 
@@ -88,21 +120,22 @@ namespace Aduaba.Services
                 return "Product not found";
             } //Category not found
 
-
-            
+            //it'll work
+            oldProduct.Name = model.NewName;
+            oldProduct.Description = model.NewDescription;
+            oldProduct.Price = model.NewPrice;
+            oldProduct.ImageUrl = model.NewImageUrl;
+            oldProduct.DateModified = DateTime.UtcNow;
 
             return "Category name updated";
 
         }
-       //// public bool SaveChanges()
-       // {
-       //     return (_context.SaveChanges() >= 0);
-       // }
-            public string DeleteProduct(List<string> productIds)
+       
+        public string DeleteProduct(List<string> names)
             {
                 List<Product> productsToDelete = new List<Product>();
 
-                productsToDelete = _context.Products.Where(c => productIds.Contains(c.Id)).ToList();
+                productsToDelete = _context.Products.Where(c => names.Contains(c.Name)).ToList();
 
                 if (productsToDelete.Count != 0)
                 {
@@ -114,6 +147,7 @@ namespace Aduaba.Services
 
                 return "Product doesn't exist";
             }
+
         }
 
         

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Aduaba.Controllers
 {
     [Authorize]
-    [Route("api/categories")]
+    [Route("api/[controller]")]
     [ApiController]
     public class CategoriesController : ControllerBase
     {
@@ -28,6 +28,21 @@ namespace Aduaba.Controllers
         public IActionResult GetAllCategories()
         {
             var result = _categoryService.GetAllCategories();
+            if (result == null)
+            {
+                return NotFound("No categories available");
+            }
+            return Ok(result);
+        }
+
+        [HttpGet ("find-by-name")]
+        public IActionResult GetCategoriesByName(string name)
+        {
+            var result = _categoryService.GetCategoryByName(name);
+            if (result == null)
+            {
+                return NotFound("Category not found");
+            }
             return Ok(result);
         }
 

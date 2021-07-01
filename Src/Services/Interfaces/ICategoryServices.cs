@@ -13,6 +13,8 @@ namespace Aduaba.Services.Interfaces
         public string AddCategory(AddCategoryRequest model);
         public List<CategoryView> GetAllCategories();
         public string EditCategory(EditCategoryRequest editCategoryRequest);
-        public string DeleteCategory(List<string> categoryIds);
+        public string DeleteCategory(List<string> categoryId);
+        public CategoryView GetCategoryByName(string name);
+
     }
 }

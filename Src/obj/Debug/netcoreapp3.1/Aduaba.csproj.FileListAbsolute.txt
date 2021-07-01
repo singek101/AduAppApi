@@ -288,4 +288,4 @@ C:\Users\whizz\Source\Repos\AduAppApi\Src\obj\Debug\netcoreapp3.1\Aduaba.csproj.
 C:\Users\whizz\Source\Repos\AduAppApi\Src\obj\Debug\netcoreapp3.1\Aduaba.dll
 C:\Users\whizz\Source\Repos\AduAppApi\Src\obj\Debug\netcoreapp3.1\Aduaba.pdb
 C:\Users\whizz\Source\Repos\AduAppApi\Src\obj\Debug\netcoreapp3.1\Aduaba.genruntimeconfig.cache
-C:\Users\whizz\source\repos\AduAppApi\Src\obj\Debug\netcoreapp3.1\Aduaba.csproj.AssemblyReference.cache
+C:\Users\whizz\Source\Repos\AduAppApi\Src\obj\Debug\netcoreapp3.1\Aduaba.csproj.AssemblyReference.cache
