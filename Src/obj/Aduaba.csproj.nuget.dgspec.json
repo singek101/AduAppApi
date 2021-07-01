@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\whizz\\Source\\Repos\\AduAppApi\\Src\\Aduaba.csproj": {}
+    "C:\\Users\\whizz\\source\\repos\\AduAppApi\\Src\\Aduaba.csproj": {}
   },
   "projects": {
-    "C:\\Users\\whizz\\Source\\Repos\\AduAppApi\\Src\\Aduaba.csproj": {
+    "C:\\Users\\whizz\\source\\repos\\AduAppApi\\Src\\Aduaba.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\whizz\\Source\\Repos\\AduAppApi\\Src\\Aduaba.csproj",
+        "projectUniqueName": "C:\\Users\\whizz\\source\\repos\\AduAppApi\\Src\\Aduaba.csproj",
         "projectName": "Aduaba",
-        "projectPath": "C:\\Users\\whizz\\Source\\Repos\\AduAppApi\\Src\\Aduaba.csproj",
+        "projectPath": "C:\\Users\\whizz\\source\\repos\\AduAppApi\\Src\\Aduaba.csproj",
         "packagesPath": "C:\\Users\\whizz\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\whizz\\Source\\Repos\\AduAppApi\\Src\\obj\\",
+        "outputPath": "C:\\Users\\whizz\\source\\repos\\AduAppApi\\Src\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\whizz\\AppData\\Roaming\\NuGet\\NuGet.Config",

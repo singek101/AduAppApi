@@ -43,7 +43,7 @@ namespace Aduaba.Services
             if (user == null)
             {
                 authenticationModel.IsAuthenticated = false;
-                authenticationModel.Message = $"No Accounts Registered with {model.Email}.";
+                authenticationModel.Message = $"Invalid email or Password.";
                 return authenticationModel;
             }
             if (await _userManager.CheckPasswordAsync(user, model.Password))
@@ -77,7 +77,7 @@ namespace Aduaba.Services
                 return authenticationModel;
             }
             authenticationModel.IsAuthenticated = false;
-            authenticationModel.Message = $"Incorrect Credentials for user {user.Email}.";
+            authenticationModel.Message = $"Invalid email or Password.";
             return authenticationModel;
         }
         //public async Task<string> LogoutAsync()

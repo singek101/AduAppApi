@@ -23,8 +23,16 @@ namespace Aduaba.Controllers
         public async Task<IActionResult> LoginAsync([FromBody] LoginRequest model)
         {
             var result = await _userServices.LoginAsync(model);
-            SetRefreshTokenInCookie(result.RefreshToken);
-            return Ok(result);
+            if(result.IsAuthenticated==false)
+            {
+                return Ok(result.Message);
+            }
+            else
+            {
+                SetRefreshTokenInCookie(result.RefreshToken);
+                return Ok(result);
+            }
+            
         }
 
         [HttpPost("register")]
