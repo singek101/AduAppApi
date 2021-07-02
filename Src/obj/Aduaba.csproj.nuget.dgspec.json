@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\whizz\\Source\\Repos\\AduAppApi\\Src\\Aduaba.csproj": {}
+    "C:\\AduabaNew\\Src\\Aduaba.csproj": {}
   },
   "projects": {
-    "C:\\Users\\whizz\\Source\\Repos\\AduAppApi\\Src\\Aduaba.csproj": {
+    "C:\\AduabaNew\\Src\\Aduaba.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\whizz\\Source\\Repos\\AduAppApi\\Src\\Aduaba.csproj",
+        "projectUniqueName": "C:\\AduabaNew\\Src\\Aduaba.csproj",
         "projectName": "Aduaba",
-        "projectPath": "C:\\Users\\whizz\\Source\\Repos\\AduAppApi\\Src\\Aduaba.csproj",
-        "packagesPath": "C:\\Users\\whizz\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\whizz\\Source\\Repos\\AduAppApi\\Src\\obj\\",
+        "projectPath": "C:\\AduabaNew\\Src\\Aduaba.csproj",
+        "packagesPath": "C:\\Users\\Bernice\\.nuget\\packages\\",
+        "outputPath": "C:\\AduabaNew\\Src\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\whizz\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Bernice\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -76,7 +80,15 @@
               "target": "Package",
               "version": "[3.1.5, )"
             },
+            "SendGrid": {
+              "target": "Package",
+              "version": "[9.24.0, )"
+            },
             "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.1.4, )"
+            },
+            "Swashbuckle.AspNetCore.Swagger": {
               "target": "Package",
               "version": "[6.1.4, )"
             },

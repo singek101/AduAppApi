@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Aduaba.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210630151434_added-models")]
-    partial class addedmodels
+    [Migration("20210701115015_Initial Migration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

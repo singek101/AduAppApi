@@ -38,6 +38,7 @@ namespace Aduaba
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddRazorPages();
             //services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             //add Swagger UI
             services.AddSwaggerGen(c =>
@@ -48,8 +49,9 @@ namespace Aduaba
             //Configuration from AppSettings
             services.Configure<JWT>(Configuration.GetSection("JWT"));
             //User Manager Service
-            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
             services.AddScoped<IUserServices, UserServices>();
+            services.AddTransient<IMailServices, MailServices>();
             services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
             services.AddScoped<ICategoryServices, CategoryServices>();
             //services.AddScoped<ISubCategoryServices, SubCategoryServices>();
@@ -96,6 +98,7 @@ namespace Aduaba
             }
 
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
 
             app.UseRouting();
 
@@ -105,6 +108,7 @@ namespace Aduaba
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapRazorPages();
                 endpoints.MapControllers();
             });
         }
