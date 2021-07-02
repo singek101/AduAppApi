@@ -36,7 +36,17 @@ namespace Aduaba.Controllers
             return Ok(result);
         }
 
-        
-        
+        [HttpGet("find-by-name")]
+        public IActionResult GetCategoriesByName(string name)
+        {
+            var result = _productServices.GetProductByName(name);
+            if (result == null)
+            {
+                return NotFound("Product not found");
+            }
+            return Ok(result);
+        }
+
+
     }
 }

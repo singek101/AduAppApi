@@ -31,7 +31,7 @@ namespace Aduaba.Controllers
             else
             {
                 SetRefreshTokenInCookie(result.RefreshToken);
-                return Ok(result);
+                return Ok(result.Token);
             }
             
         }

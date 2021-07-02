@@ -77,6 +77,7 @@ namespace Aduaba.Controllers
 
                 if (result.Any())
                 {
+                    
                     return Ok(result);
                 }
 

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Aduaba.Migrations
 {
-    public partial class addedmodels : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -332,13 +332,14 @@ namespace Aduaba.Migrations
                 name: "Products",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: false),
                     Description = table.Column<string>(nullable: false),
-                    Price = table.Column<double>(nullable: false),
-                    CategoryId = table.Column<string>(nullable: false),
+                    Price = table.Column<decimal>(nullable: false),
+                    CategoryId = table.Column<string>(nullable: true),
+                    Quantity = table.Column<int>(nullable: false),
                     DateAdded = table.Column<DateTime>(nullable: false),
+                    DateModified = table.Column<DateTime>(nullable: false),
                     ImageUrl = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -349,7 +350,7 @@ namespace Aduaba.Migrations
                         column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -400,16 +401,15 @@ namespace Aduaba.Migrations
                 columns: table => new
                 {
                     WishListItemId = table.Column<string>(nullable: false),
-                    ProductId1 = table.Column<int>(nullable: true),
-                    ProductId = table.Column<string>(nullable: false),
-                    WishListId = table.Column<string>(nullable: false)
+                    ProductId = table.Column<string>(nullable: true),
+                    WishListId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_WishListItems", x => x.WishListItemId);
                     table.ForeignKey(
-                        name: "FK_WishListItems_Products_ProductId1",
-                        column: x => x.ProductId1,
+                        name: "FK_WishListItems_Products_ProductId",
+                        column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -418,7 +418,7 @@ namespace Aduaba.Migrations
                         column: x => x.WishListId,
                         principalTable: "WishLists",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -426,10 +426,9 @@ namespace Aduaba.Migrations
                 columns: table => new
                 {
                     CartItemId = table.Column<string>(nullable: false),
-                    ProductId1 = table.Column<int>(nullable: true),
-                    ProductId = table.Column<string>(nullable: false),
+                    ProductId = table.Column<string>(nullable: true),
                     Quantity = table.Column<int>(nullable: false),
-                    CartId = table.Column<string>(nullable: false),
+                    CartId = table.Column<string>(nullable: true),
                     OrderId = table.Column<string>(nullable: true),
                     ApplicationUserId = table.Column<string>(nullable: true)
                 },
@@ -447,7 +446,7 @@ namespace Aduaba.Migrations
                         column: x => x.CartId,
                         principalTable: "Carts",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_CartItems_Orders_OrderId",
                         column: x => x.OrderId,
@@ -455,8 +454,8 @@ namespace Aduaba.Migrations
                         principalColumn: "OrderId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_CartItems_Products_ProductId1",
-                        column: x => x.ProductId1,
+                        name: "FK_CartItems_Products_ProductId",
+                        column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -468,7 +467,7 @@ namespace Aduaba.Migrations
                 {
                     Id = table.Column<string>(nullable: false),
                     OrderId = table.Column<string>(nullable: true),
-                    OrderNumber = table.Column<string>(nullable: false),
+                    OrderNumber = table.Column<string>(nullable: true),
                     PaymentStatusId = table.Column<int>(nullable: false),
                     LastModified = table.Column<DateTime>(nullable: false),
                     ApplicationUserId = table.Column<string>(nullable: true)
@@ -561,9 +560,9 @@ namespace Aduaba.Migrations
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CartItems_ProductId1",
+                name: "IX_CartItems_ProductId",
                 table: "CartItems",
-                column: "ProductId1");
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Carts_ApplicationUserId1",
@@ -616,9 +615,9 @@ namespace Aduaba.Migrations
                 column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_WishListItems_ProductId1",
+                name: "IX_WishListItems_ProductId",
                 table: "WishListItems",
-                column: "ProductId1");
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_WishListItems_WishListId",
