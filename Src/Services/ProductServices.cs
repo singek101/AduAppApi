@@ -1,4 +1,6 @@
 ﻿using Aduaba.Data;
+using Aduaba.DTO.Product;
+using Aduaba.DTOPresentation;
 using Aduaba.Models;
 using Aduaba.Services.Interfaces;
 using System;
@@ -16,44 +18,151 @@ namespace Aduaba.Services
         {
             _context = context;
         }
-        public void AddProduct(Product product)
+        public string AddProduct(AddProductRequest model)
         {
-            if(product == null)
+            var productExist = _context.Products.FirstOrDefault(c => c.Name == model.Name);
+            if (productExist != null)
             {
-                throw new ArgumentNullException(nameof(product));
+                return "Product already exist, Please check the name of the Product";
             }
-            _context.Add(product);
+            _context.Products.Add(new Product()
+            {
+                Id = Guid.NewGuid().ToString(),
+                Name = model.Name,
+                Description = model.Description,
+                Price = model.Price,
+                ImageUrl = model.ImageUrl,
+                Quantity = model.Quantity,
+                DateAdded = model.DateAdded = DateTime.UtcNow,
+                CategoryId=model.CategoryId
+
+
+            }); ;
+            _context.SaveChanges();
+            return "Product Added";
         }
 
-        public IEnumerable<Product> GetAllProducts()
+        public List<ProductView> GetAllProducts()
         {
-            var productsFound = _context.Products.ToList();
-            return productsFound;
+            List<ProductView> listOfProducts = new List<ProductView>();
+            List<Product> availableProducts = _context.Products.ToList();
+           
+            foreach (var product in availableProducts)
+            {
+                listOfProducts.Add(new ProductView()
+                {
+                    Id = product.Id,
+                    Name = product.Name,
+                    Description = product.Description,
+                    Price = product.Price,
+                    ImageUrl = product.ImageUrl,
+                    CategoryId = product.CategoryId
+
+                });
+
+            }
+            return listOfProducts;
+
+
         }
-        public Product GetProductById(int id)
+        public ProductView GetProductById(string id)
         {
-            var foundProduct = _context.Products.FirstOrDefault(p => p.Id == id);
-            return foundProduct;
+            if(!string.IsNullOrEmpty(id))
+            {
+                var foundProduct = _context.Products.FirstOrDefault(p => p.Id == id);
+                if (foundProduct == null)
+                {
+                    return null;
+                }
+                ProductView product = (new ProductView()
+                {
+                    Id = foundProduct.Id,
+                    Name = foundProduct.Name,
+                    Description = foundProduct.Description,
+                    ImageUrl = foundProduct.ImageUrl,
+                    CategoryId = foundProduct.CategoryId
+
+                });
+                return product;
+            }
+            return null;
+            
+        }
+
+        public ProductView GetProductByName(string name)
+        {
+            if(!string.IsNullOrEmpty(name))
+            {
+                var foundProduct = _context.Products.FirstOrDefault(c => c.Name == name);
+                if (foundProduct == null)
+                {
+                    return null;
+                }
+                ProductView product = (new ProductView()
+                {
+                    Id = foundProduct.Id,
+                    Name = foundProduct.Name,
+                    Description = foundProduct.Description,
+                    ImageUrl = foundProduct.ImageUrl,
+                    CategoryId = foundProduct.CategoryId
+
+                });
+                return product;
+            }
+            return null;
         }
         
 
-        public void UpdateProduct(Product product)
+        public string UpdateProduct(EditProductRequest model)
         {
-            
-        }
-        public bool SaveChanges()
-        {
-            return (_context.SaveChanges() >= 0);
-        }
-        public void DeleteProduct(Product product)
-        {
-            if(product == null)
+            var oldProduct = _context.Products.FirstOrDefault(c => c.Id == model.Id);
+
+            if (oldProduct == null)
             {
-                throw new ArgumentNullException(nameof(product));
+                return "Product not found";
+            } //Category not found
+
+            //it'll work
+            if (model.NewPrice != 0 && model.UpdatedQuantity!=0)
+            {
+                oldProduct.Price = model.NewPrice;
+                oldProduct.Quantity = model.UpdatedQuantity; 
+                
             }
-            _context.Products.Remove(product);
+            else if (model.NewPrice==0)
+            {
+                oldProduct.Quantity = model.UpdatedQuantity;
+                
+            }
+            else if (model.UpdatedQuantity==0)
+            {
+                oldProduct.Price = model.NewPrice;
+            }
+            oldProduct.DateModified = DateTime.UtcNow;
+            _context.SaveChanges();
+            return "Product updated";
+
+        }
+       
+        public string DeleteProduct(List<string> names)
+            {
+                List<Product> productsToDelete = new List<Product>();
+
+                productsToDelete = _context.Products.Where(c => names.Contains(c.Name)).ToList();
+
+                if (productsToDelete.Count != 0)
+                {
+                    _context.Products.RemoveRange(productsToDelete);
+                    _context.SaveChanges();
+
+                    return "Product Deleted Succesfully";
+                }
+
+                return "Product doesn't exist";
+            }
+
         }
 
         
     }
-}
+

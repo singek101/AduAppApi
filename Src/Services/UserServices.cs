@@ -43,7 +43,7 @@ namespace Aduaba.Services
             if (user == null)
             {
                 authenticationModel.IsAuthenticated = false;
-                authenticationModel.Message = $"No Accounts Registered with {model.Email}.";
+                authenticationModel.Message = $"Invalid email or Password.";
                 return authenticationModel;
             }
             if (await _userManager.CheckPasswordAsync(user, model.Password))
@@ -77,7 +77,7 @@ namespace Aduaba.Services
                 return authenticationModel;
             }
             authenticationModel.IsAuthenticated = false;
-            authenticationModel.Message = $"Incorrect Credentials for user {user.Email}.";
+            authenticationModel.Message = $"Invalid email or Password.";
             return authenticationModel;
         }
         //public async Task<string> LogoutAsync()
@@ -152,7 +152,8 @@ namespace Aduaba.Services
                 Email = model.Email,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
-                PhoneNumber=model.PhoneNumber
+                PhoneNumber = model.PhoneNumber,
+                AvatarUrl = "tet"
             };
             var userWithSameEmail = await _userManager.FindByEmailAsync(model.Email);
             if (userWithSameEmail == null)
@@ -161,12 +162,16 @@ namespace Aduaba.Services
                 if (result.Succeeded)
                 {
                     await _userManager.AddToRoleAsync(user, Authorization.Roles.User.ToString());
+                    return $"User Registered with username {user.UserName}";
                 }
-                return $"User Registered with username {user.UserName}";
+
+                return "Error has occured";
+
+
             }
             else
             {
-                return $"Email {user.Email } is already registered.";
+                return $"User Registered with username {user.UserName}";
             }
         }
 
@@ -208,10 +213,11 @@ namespace Aduaba.Services
         public async Task<string> UpdateAsync(UpdateRequest model)
         {
             var currentUser = await _userManager.FindByIdAsync(_authenticatedUser.UserId);
-            currentUser.UserName = model.Username;
+            
             currentUser.FirstName = model.FirstName;
             currentUser.LastName = model.LastName;
             currentUser.PhoneNumber = model.PhoneNumber;
+            currentUser.AvatarUrl = model.AvatarUrl;
 
 
             await _userManager.UpdateAsync(currentUser);

@@ -25,7 +25,7 @@ namespace Aduaba.Models
 
         public virtual ApplicationUser ApplicationUser { get; set; }
 
-        [Required]
+        
         public int AplicationUserId { get; set; }
 
 

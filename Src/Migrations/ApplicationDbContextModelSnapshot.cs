@@ -193,18 +193,13 @@ namespace Aduaba.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CartId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("OrderId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProductId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ProductId1")
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -217,7 +212,7 @@ namespace Aduaba.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.HasIndex("ProductId1");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("CartItems");
                 });
@@ -310,7 +305,6 @@ namespace Aduaba.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("OrderNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PaymentStatusId")
@@ -345,16 +339,16 @@ namespace Aduaba.Migrations
 
             modelBuilder.Entity("Aduaba.Models.Product", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CategoryId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("DateAdded")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateModified")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -368,8 +362,11 @@ namespace Aduaba.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -444,19 +441,14 @@ namespace Aduaba.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProductId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ProductId1")
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("WishListId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("WishListItemId");
 
-                    b.HasIndex("ProductId1");
+                    b.HasIndex("ProductId");
 
                     b.HasIndex("WishListId");
 
@@ -656,9 +648,7 @@ namespace Aduaba.Migrations
 
                     b.HasOne("Aduaba.Models.Cart", "Cart")
                         .WithMany("CartItems")
-                        .HasForeignKey("CartId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CartId");
 
                     b.HasOne("Aduaba.Models.Order", "Order")
                         .WithMany("CartItems")
@@ -666,7 +656,7 @@ namespace Aduaba.Migrations
 
                     b.HasOne("Aduaba.Models.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId1");
+                        .HasForeignKey("ProductId");
                 });
 
             modelBuilder.Entity("Aduaba.Models.Order", b =>
@@ -711,9 +701,7 @@ namespace Aduaba.Migrations
                 {
                     b.HasOne("Aduaba.Models.Category", "Category")
                         .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CategoryId");
                 });
 
             modelBuilder.Entity("Aduaba.Models.ShippingAddress", b =>
@@ -734,13 +722,11 @@ namespace Aduaba.Migrations
                 {
                     b.HasOne("Aduaba.Models.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId1");
+                        .HasForeignKey("ProductId");
 
                     b.HasOne("Aduaba.Models.WishList", "WishList")
                         .WithMany("WishListItems")
-                        .HasForeignKey("WishListId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("WishListId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
