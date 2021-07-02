@@ -1,4 +1,6 @@
-﻿using Aduaba.Models;
+﻿using Aduaba.DTO.Product;
+using Aduaba.DTOPresentation;
+using Aduaba.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,14 +10,16 @@ namespace Aduaba.Services.Interfaces
 {
     public interface IProductServices
     {
-        void  AddProduct(Product product);
-        IEnumerable<Product> GetAllProducts();
-        Product GetProductById(int id);
-       
-        void UpdateProduct(Product product);
-        bool SaveChanges();
-        void DeleteProduct(Product product);
+        public string AddProduct(AddProductRequest model);
+        public ProductView GetProductById(string id);
+        public string UpdateProduct(EditProductRequest model);
+        public string DeleteProduct(List<string> productIds);
+        public ProductView GetProductByName(string name);
+        public List<ProductView> GetAllProducts();
 
-        
+
+
+
+
     }
 }

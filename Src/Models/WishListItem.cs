@@ -13,12 +13,11 @@ namespace Aduaba.Models
 
         public virtual Product Product { get; set; }
 
-        [Required]
         public string ProductId { get; set; }
 
         public virtual WishList WishList { get; set; }
 
-        [Required]
+        
         public string WishListId { get; set; }
     }
 }

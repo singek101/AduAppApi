@@ -1,6 +1,7 @@
 ﻿using Aduaba.DTOPresentation;
 using Aduaba.Services.Interfaces;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,30 +10,42 @@ using System.Threading.Tasks;
 
 namespace Aduaba.Controllers
 {
-    [Route("api/categories")]
+    [Authorize]
+    [Route("api/[controller]")]
     [ApiController]
     public class CategoriesController : ControllerBase
     {
-        private readonly ICategoryServices _service;
-        private readonly IMapper _mapper;
+        private readonly ICategoryServices _categoryService;
+        
 
-        public CategoriesController(ICategoryServices service, IMapper mapper)
+        public CategoriesController(ICategoryServices categoryService)
         {
-            _service = service;
-            _mapper = mapper;
+            _categoryService = categoryService;
+            
         }
-   [HttpGet]
-   public ActionResult <IEnumerable<CategoryViewDto>> GetAllCategories()
+
+        [HttpGet]
+        public IActionResult GetAllCategories()
         {
-            var categoryNames = _service.GetAllCategories();
-            if(categoryNames !=null)
+            var result = _categoryService.GetAllCategories();
+            if (result == null)
             {
-                return Ok(_mapper.Map<CategoryViewDto>(categoryNames));
+                return NotFound("No categories available");
             }
-            else
-            {
-                return NotFound();
-            }
+            return Ok(result);
         }
+
+        [HttpGet ("find-by-name")]
+        public IActionResult GetCategoriesByName(string name)
+        {
+            var result = _categoryService.GetCategoryByName(name);
+            if (result == null)
+            {
+                return NotFound("Category not found");
+            }
+            return Ok(result);
+        }
+
+       
     }
 }

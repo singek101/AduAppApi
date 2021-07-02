@@ -54,6 +54,8 @@ namespace Aduaba
             services.AddTransient<IMailServices, MailServices>();
             services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
             services.AddScoped<ICategoryServices, CategoryServices>();
+            services.AddScoped<IProductServices, ProductServices>();
+            services.AddScoped<ISearchServices, SearchServices>();
             //services.AddScoped<ISubCategoryServices, SubCategoryServices>();
             services.AddScoped<IProductServices, ProductServices>();
             //Adding DB Context with MSSQL

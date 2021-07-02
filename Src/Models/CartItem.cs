@@ -13,7 +13,6 @@ namespace Aduaba.Models
 
         public virtual Product Product { get; set; }
 
-        [Required]
         public string ProductId { get; set; }
 
         [Required]
@@ -21,7 +20,7 @@ namespace Aduaba.Models
 
         public virtual Cart Cart { get; set; }
 
-        [Required]
+        
         public string CartId { get; set; }
 
         public virtual Order Order { get; set; }

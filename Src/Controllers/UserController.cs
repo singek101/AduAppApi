@@ -1,7 +1,11 @@
 ﻿using Aduaba.DTO;
 using Aduaba.DTO.Account;
 using Aduaba.Services;
+<<<<<<< HEAD
 using Aduaba.Services.Interfaces;
+=======
+using Microsoft.AspNetCore.Authorization;
+>>>>>>> b5f82058f6a5be313883a75008e5eaf9641706fa
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -30,6 +34,7 @@ namespace Aduaba.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> LoginUserAsync([FromBody] LoginRequest model)
         {
+<<<<<<< HEAD
             if (ModelState.IsValid)
             {
 
@@ -45,6 +50,19 @@ namespace Aduaba.Controllers
                 return BadRequest(result);
             }
             return BadRequest("Some properties are not valid");
+=======
+            var result = await _userServices.LoginAsync(model);
+            if(result.IsAuthenticated==false)
+            {
+                return Ok(result.Message);
+            }
+            else
+            {
+                SetRefreshTokenInCookie(result.RefreshToken);
+                return Ok(result.Token);
+            }
+            
+>>>>>>> b5f82058f6a5be313883a75008e5eaf9641706fa
         }
 
         [HttpPost("register")]
