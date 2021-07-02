@@ -63,7 +63,7 @@ namespace Aduaba.Controllers
         [HttpDelete("Delete")]
         public async Task<IActionResult>Delete()
         {
-            var result = await _userServices.DeleteAsync();
+            var result = await _userServices.DeleteUserAsync();
             return Ok(result);
         }
 

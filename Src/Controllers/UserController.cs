@@ -1,8 +1,14 @@
 ﻿using Aduaba.DTO;
+using Aduaba.DTO.Account;
 using Aduaba.Services;
+<<<<<<< HEAD
+using Aduaba.Services.Interfaces;
+=======
 using Microsoft.AspNetCore.Authorization;
+>>>>>>> b5f82058f6a5be313883a75008e5eaf9641706fa
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,15 +20,37 @@ namespace Aduaba.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUserServices _userServices;
-        public UserController(IUserServices userServices)
+
+        private readonly IUserServices _userServices;      
+        private readonly IMailServices _mailservices;
+        private readonly IConfiguration _configuration;
+        public UserController(IUserServices userServices, IConfiguration configuration, IMailServices mailservices)
         {
-            _userServices = userServices;
+            _userServices = userServices;         
+            _mailservices = mailservices;
+            _configuration = configuration;
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> LoginAsync([FromBody] LoginRequest model)
+        public async Task<IActionResult> LoginUserAsync([FromBody] LoginRequest model)
         {
+<<<<<<< HEAD
+            if (ModelState.IsValid)
+            {
+
+                var result = await _userServices.LoginUserAsync(model);
+                
+                if (result.IsSuccess)
+                {
+                    SetRefreshTokenInCookie(result.RefreshToken);
+
+                    await _mailservices.SendEmailAsync(model.Email, "New Login", "<h1> Hey! new login to your account noticed</h1><p>New login to your account at" + DateTime.Now + "</p>");
+                    return Ok(result);
+                }
+                return BadRequest(result);
+            }
+            return BadRequest("Some properties are not valid");
+=======
             var result = await _userServices.LoginAsync(model);
             if(result.IsAuthenticated==false)
             {
@@ -34,15 +62,70 @@ namespace Aduaba.Controllers
                 return Ok(result.Token);
             }
             
+>>>>>>> b5f82058f6a5be313883a75008e5eaf9641706fa
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult> RegisterAsync([FromBody]RegisterRequest model)
+        public async Task<ActionResult> RegisterUserAsync([FromBody]RegisterRequest model)
         {
-
-            var result = await _userServices.RegisterAsync(model);
-            return Ok(result);
+            if (ModelState.IsValid)
+            {
+                var result = await _userServices.RegisterUserAsync(model);
+                if (result.IsSuccess)
+                    return Ok(result);
+                return BadRequest(result);
+            }
+            return BadRequest("Some fields are invalid");
         }
+
+        [HttpGet("ConfirmEmail")]
+        public async Task<IActionResult> ConfirmEmail(string userId, string token)
+        {
+            if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(token))
+
+                return NotFound();
+
+            var result = await _mailservices.ConfirmEmailAsync(userId, token);
+            if (result.IsSuccess)
+            {
+                //if email is confirmed successfully, return user to a static html page wwwroot
+                return Redirect($"{_configuration["AppUrl"]}/ConfirmEmail.html");
+
+            }
+            return BadRequest(result);
+
+        }
+
+        [HttpPost("ForgetPassword")]
+
+        public async Task<IActionResult> ForgetPassword(string email)
+        {
+            if (string.IsNullOrEmpty(email))
+                return NotFound();
+            var result = await _userServices.ForgetPasswordAsync(email);
+            if (result.IsSuccess)
+                return Ok(result);
+            return BadRequest(result);
+
+        }
+
+        [HttpPost("ResetPassword")]
+
+        public async Task<IActionResult> ResetPassword([FromForm] ResetPassword model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _userServices.ResetPasswordAsync(model);
+                if (result.IsSuccess)
+                    return Ok(result);
+                return BadRequest(result);
+
+            }
+            return BadRequest("Some fields are invalid");
+        }
+
+
+
 
         private void SetRefreshTokenInCookie(string refreshToken)
         {
@@ -54,6 +137,8 @@ namespace Aduaba.Controllers
 
             Response.Cookies.Append("refreshToken", refreshToken, cookieOptions);
         }
+
+
        
 
         [HttpPost("refresh-t")]
