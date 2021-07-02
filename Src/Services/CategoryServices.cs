@@ -60,10 +60,13 @@ namespace Aduaba.Services
                 {
                     return null;
                 }
+                
                 CategoryView category = (new CategoryView()
                 {
                     CategoryId = foundCategory.Id,
-                    CategoryName=foundCategory.CategoryName
+                    CategoryName=foundCategory.CategoryName,
+                    
+                    
 
                 });
                 return category;

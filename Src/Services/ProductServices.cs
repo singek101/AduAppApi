@@ -51,11 +51,13 @@ namespace Aduaba.Services
             {
                 listOfProducts.Add(new ProductView()
                 {
-                    Id=product.Id,
-                    Name=product.Name,
-                    Description=product.Description,
-                    Price=product.Price,
-                    ImageUrl=product.ImageUrl                   
+                    Id = product.Id,
+                    Name = product.Name,
+                    Description = product.Description,
+                    Price = product.Price,
+                    ImageUrl = product.ImageUrl,
+                    CategoryId = product.CategoryId
+
                 });
 
             }
@@ -121,13 +123,24 @@ namespace Aduaba.Services
             } //Category not found
 
             //it'll work
-            oldProduct.Name = model.NewName;
-            oldProduct.Description = model.NewDescription;
-            oldProduct.Price = model.NewPrice;
-            oldProduct.ImageUrl = model.NewImageUrl;
+            if (model.NewPrice != 0 && model.UpdatedQuantity!=0)
+            {
+                oldProduct.Price = model.NewPrice;
+                oldProduct.Quantity = model.UpdatedQuantity; 
+                
+            }
+            else if (model.NewPrice==0)
+            {
+                oldProduct.Quantity = model.UpdatedQuantity;
+                
+            }
+            else if (model.UpdatedQuantity==0)
+            {
+                oldProduct.Price = model.NewPrice;
+            }
             oldProduct.DateModified = DateTime.UtcNow;
-
-            return "Category name updated";
+            _context.SaveChanges();
+            return "Product updated";
 
         }
        
